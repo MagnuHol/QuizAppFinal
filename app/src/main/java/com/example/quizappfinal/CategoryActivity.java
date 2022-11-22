@@ -15,17 +15,20 @@ public class CategoryActivity extends AppCompatActivity {
 
         Button buttonHistory = findViewById(R.id.historybutton);
         buttonHistory.setOnClickListener(view -> {
-            Intent intent = new Intent(view.getContext(), SportActivity.class);
+            Intent intent = new Intent(view.getContext(), QuizActivity.class);
+            intent.putExtra("category", "history");
             startActivity(intent);
         });
         Button ButtonSport = findViewById(R.id.sportsbutton);
         ButtonSport.setOnClickListener(view -> {
-            Intent intent = new Intent(view.getContext(), MusicActivity.class);
+            Intent intent = new Intent(view.getContext(), QuizActivity.class);
+            intent.putExtra("category", "sport");
             startActivity(intent);
         });
         Button ButtonMusic = findViewById(R.id.musicbutton);
         ButtonMusic.setOnClickListener(view -> {
-            Intent intent = new Intent(view.getContext(), HistoryActivity.class);
+            Intent intent = new Intent(view.getContext(), QuizActivity.class);
+            intent.putExtra("category", "music");
             startActivity(intent);
         });
     }

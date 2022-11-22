@@ -7,14 +7,14 @@
     android:gravity="center"
     android:orientation="vertical"
     android:background="#1565c0"
-    tools:context=".MainActivity"
+    tools:context=".HighscoreActivity"
     >
 
     <TextView
         android:id="@+id/textView_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Topscore"
+        android:text="Highscore"
         android:layout_marginBottom="20dp"
         android:textSize="60sp"
         android:textColor="@color/white"
@@ -41,7 +41,7 @@
             android:layout_margin="8dp"/>
 
         <TextView
-            android:id="@+id/textView_HighscoreHistory"
+            android:id="@+id/textView_historyScore"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
@@ -62,7 +62,7 @@
             android:gravity="center"
             android:layout_margin="8dp"/>
         <TextView
-            android:id="@+id/textView_highscoreMusic"
+            android:id="@+id/textView_musicScore"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="score"
@@ -83,7 +83,7 @@
             android:gravity="center"
             android:layout_margin="8dp"/>
         <TextView
-            android:id="@+id/textView_highscoreSport"
+            android:id="@+id/textView_sportScore"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="score"

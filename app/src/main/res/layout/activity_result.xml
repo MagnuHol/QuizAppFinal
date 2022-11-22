@@ -7,7 +7,7 @@
     android:gravity="center"
     android:orientation="vertical"
     android:background="#1565c0"
-    tools:context=".HighscoreActivty"
+    tools:context=".ResultActivity"
     >
 
   <TextView
@@ -29,7 +29,7 @@
     ></ImageView>
 
   <TextView
-      android:id="@+id/textView_score"
+      android:id="@+id/textView_userScore"
       android:layout_width="match_parent"
       android:layout_height="109dp"
       android:layout_marginBottom="30dp"
@@ -41,13 +41,27 @@
 
 
   <Button
-      android:id="@+id/button_mainActivity"
+      android:id="@+id/button_retry"
+      android:layout_width="match_parent"
+      android:layout_height="75dp"
+      android:layout_margin="8dp"
+      android:gravity="center"
+      android:padding="10dp"
+      android:text="Try Again"
+      android:textColor="@color/white"
+      android:background="@color/fui_transparent"
+      android:textSize="30sp"
+      app:iconGravity="textStart" />
+
+  <Button
+      android:id="@+id/button_finish"
       android:layout_width="match_parent"
       android:layout_height="75dp"
       android:layout_margin="8dp"
       android:gravity="center"
       android:padding="10dp"
       android:text="Finish"
+      android:background="@color/fui_transparent"
       android:textColor="@color/white"
       android:textSize="30sp"
       app:iconGravity="textStart" />

@@ -3,6 +3,7 @@ package com.example.quizappfinal;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -15,58 +16,45 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class ResultActivity extends AppCompatActivity {
 
+    TextView textView_userScore;
+    Button button_retry, button_finish;
+
+    int score;
+    String category;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
 
-        String activity = getIntent().getStringExtra("activity");
+        score = getIntent().getIntExtra("score", 0);
+        category = getIntent().getStringExtra("category");
 
-        switch (activity) {
-            case "sport":
-                setHighscoresSportFirebase();
-                setHighscoreSport();
-                break;
-        }
-        Button button_mainActivity = findViewById(R.id.button_mainActivity);
-        button_mainActivity.setOnClickListener(view -> {
-            Intent intent = new Intent(view.getContext(), MainActivity.class);
-            startActivity(intent);
+        textView_userScore = findViewById(R.id.textView_userScore);
+
+        button_retry = findViewById(R.id.button_retry);
+        button_finish = findViewById(R.id.button_finish);
+
+        textView_userScore.setText(String.valueOf(score));
+        textView_userScore.setText(score + " /10");
+
+        button_retry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ResultActivity.this,QuizActivity.class);
+                intent.putExtra("category", category);
+                startActivity(intent);
+                finish();
+            }
         });
 
+        button_finish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ResultActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
-
-      public void setHighscoreSport(){
-        TextView textView_highscore = findViewById(R.id.textView_highscoreSport);
-        SharedPreferences sport = getSharedPreferences("Sport", 0);
-        int score = getIntent().getIntExtra("score", 0);
-
-        TextView textView_score = findViewById(R.id.textView_score);
-        textView_score.setText("Score: " + String.valueOf(score));
-        int highscore = sport.getInt("HIGHSCORE", 0);
-
-        if(score > highscore){
-            textView_highscore.setText("High Score: " + score);
-            SharedPreferences.Editor editor = sport.edit();
-            editor.apply();
-        }
-        else {
-            textView_highscore.setText("Best Score: " + highscore);
-        }
-    }
-
-    public void setHighscoresSportFirebase(){
-        int score = getIntent().getIntExtra("score",0);
-
-        FirebaseDatabase database = FirebaseDatabase.getInstance("https://quizappfinal-77f04-default-rtdb.europe-west1.firebasedatabase.app/");
-        DatabaseReference myRef = database.getReference("HighscoresSport");
-
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String userName = user.getDisplayName();
-        Score highscore = new Score(userName, score);
-        myRef.push().setValue(highscore);
-    }
-
-
-
 }
