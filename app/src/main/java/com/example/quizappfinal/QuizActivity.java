@@ -2,11 +2,10 @@ package com.example.quizappfinal;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.nfc.Tag;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -25,10 +24,11 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.concurrent.TimeUnit;
 
 public class QuizActivity extends AppCompatActivity {
 
-    TextView textView_question, textView_option1, textView_option2, textView_option3, textView_option4, textView_score;
+    TextView textView_question, textView_option1, textView_option2, textView_option3, textView_option4, textView_score, textView_timer;
     DatabaseReference databaseReference;
     Button button_next;
     String category, selectedOption, correctAns;
@@ -54,6 +54,8 @@ public class QuizActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
 
+        SetTimer();
+
         spref = getSharedPreferences("scorepref", MODE_PRIVATE);
         edit = spref.edit();
 
@@ -64,11 +66,13 @@ public class QuizActivity extends AppCompatActivity {
         textView_option2 = findViewById(R.id.textView_option2);
         textView_option3 = findViewById(R.id.textView_option3);
         textView_option4 = findViewById(R.id.textView_option4);
+        textView_timer = findViewById(R.id.textView_timer);
 
         textView_score = findViewById(R.id.textView_score);
         textView_score.setText(score + " /10");
 
         button_next = findViewById(R.id.button_next);
+
 
         for (int i = 0; i < 10; i++) {
             questionList.add(i);
@@ -201,6 +205,21 @@ public class QuizActivity extends AppCompatActivity {
 
     }
 
+    void SetTimer() {
+        new CountDownTimer(300000, 1000) {
+            public void onTick(long millisUntilFinished) {
+                int seconds = (int) (millisUntilFinished / 1000);
+                textView_timer.setText(String.valueOf(seconds));
+            }
+
+            public void onFinish() {
+                FinishQuiz();
+                textView_timer.setText("Finished!!");
+                Toast.makeText(getApplicationContext(), "Timer ran out, TRY AGAIN!", Toast.LENGTH_LONG).show();
+            }
+        }.start();
+    }
+
     void FinishQuiz() {
         if (score > spref.getInt(category, 0)) {
             edit.putInt(category, score);
@@ -212,6 +231,29 @@ public class QuizActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
+     void reverseTimer(){
+
+         CountDownTimer timer = new CountDownTimer(60000, 1000) {
+
+
+             public void onTick(long millisUntilFinished) {
+                 String showMinAndSec = String.format("%02d:%02", TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished),
+                         TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)));
+
+                 textView_timer.setText(showMinAndSec);
+
+                 Log.e(TAG, getClass().toString() + textView_timer);
+             }
+
+             public void onFinish() {
+                 textView_timer.setText("Completed");
+                 finish();
+             }
+         };
+    }
+
+
 
     void DisableClick() {
         textView_option1.setClickable(false);
