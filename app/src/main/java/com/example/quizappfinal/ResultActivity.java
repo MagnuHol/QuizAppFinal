@@ -38,6 +38,7 @@ public class ResultActivity extends AppCompatActivity {
         textView_userScore.setText(String.valueOf(score));
         textView_userScore.setText(score + " /10");
 
+        // when button retry is clicked it returns the user to the previous quiz category they were attempting.
         button_retry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -47,7 +48,7 @@ public class ResultActivity extends AppCompatActivity {
                 finish();
             }
         });
-
+        //when button is clicked, it returns the user to the main screen.
         button_finish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

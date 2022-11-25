@@ -73,7 +73,7 @@ public class QuizActivity extends AppCompatActivity {
 
         button_next = findViewById(R.id.button_next);
 
-
+        // simple array list for scrambling questions, making the order of questions random.
         for (int i = 0; i < 10; i++) {
             questionList.add(i);
         }
@@ -83,6 +83,7 @@ public class QuizActivity extends AppCompatActivity {
 
         databaseReference = FirebaseDatabase.getInstance("https://quizappfinal-77f04-default-rtdb.europe-west1.firebasedatabase.app/").getReference(category);
 
+        // fetches a snapshot of the the data from firebase. gets value from each variable.
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -103,6 +104,9 @@ public class QuizActivity extends AppCompatActivity {
 
             }
         });
+
+
+        //here i give each button a set of functions that is run when clicked.
 
         textView_option1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -149,6 +153,7 @@ public class QuizActivity extends AppCompatActivity {
             }
         });
 
+        //
         button_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -164,7 +169,8 @@ public class QuizActivity extends AppCompatActivity {
             }
         });
     }
-
+// checks if index is less than amount of questions, if that is correct it will increment the question index,
+// reset colors and call on the next question, if index is not < 9, it has run out of questions. and will move users to the result screen.
     void nextQuestion() {
         if (index < 9) {
             index++;
@@ -174,7 +180,9 @@ public class QuizActivity extends AppCompatActivity {
             FinishQuiz();
         }
     }
-
+// if option is not the same as 0 it means that a button has been clicked which then checks if selected option is similiar to the answer
+    // if it is equal the score will be incremented by one. If selection is not equal to answer it will run wrongoption function. which will
+    // display the red color at selected answer and green color to the correct answer.
     void ValidateAns() {
         if (option != 0) {
             if (selectedOption.equals(correctAns)) {
@@ -230,27 +238,6 @@ public class QuizActivity extends AppCompatActivity {
         intent.putExtra("category", category);
         startActivity(intent);
         finish();
-    }
-
-     void reverseTimer(){
-
-         CountDownTimer timer = new CountDownTimer(60000, 1000) {
-
-
-             public void onTick(long millisUntilFinished) {
-                 String showMinAndSec = String.format("%02d:%02", TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished),
-                         TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)));
-
-                 textView_timer.setText(showMinAndSec);
-
-                 Log.e(TAG, getClass().toString() + textView_timer);
-             }
-
-             public void onFinish() {
-                 textView_timer.setText("Completed");
-                 finish();
-             }
-         };
     }
 
 

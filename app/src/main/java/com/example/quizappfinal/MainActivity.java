@@ -31,13 +31,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // sets up exit button on main screen, if exit is presset logout function will activate.
         Button button_log_out = findViewById(R.id.button_exit);
+
         button_log_out.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 logout();
             }
         });
+
+        // function which checks if user already exists in firebase. if current user dont exist, it will create a page for
+        // users to enter their email and password, when the process is done it will display your login name as signed in.
 
         auth = FirebaseAuth.getInstance();
         authStateListener = new FirebaseAuth.AuthStateListener() {
@@ -62,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
+        // when play button is pressed it will redirect the user to the category activity
         Button button_play = findViewById(R.id.button_play);
 
         button_play.setOnClickListener(new View.OnClickListener() {
@@ -72,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // when highscore button is pressed it will redirect the user to the highscore activity
         Button button_highscores = findViewById(R.id.button_stats);
 
         button_highscores.setOnClickListener(new View.OnClickListener() {
@@ -83,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    // code for activity result
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -97,6 +105,8 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "not signed in", Toast.LENGTH_LONG).show();
         }
     }
+
+    //logout function signs out the user.
     protected void logout(){
         AuthUI.getInstance().signOut(getApplicationContext()).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override

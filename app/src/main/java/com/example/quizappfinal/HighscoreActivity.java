@@ -20,7 +20,7 @@ public class HighscoreActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scoreboard);
-
+        // gets sharedprefernce values from quiz activity, sorts the scores to the correct category
         spref = getSharedPreferences("scorepref",MODE_PRIVATE);
 
         scoreH = spref.getInt("history", 0);
@@ -32,6 +32,8 @@ public class HighscoreActivity extends AppCompatActivity {
         textView_historyScore = findViewById(R.id.textView_historyScore);
         textView_musicScore= findViewById(R.id.textView_musicScore);
 
+        // displays score values in highscore activity.
+
         textView_sportScore.setText(String.valueOf(+scoreP));
         textView_historyScore.setText(String.valueOf(+scoreH));
         textView_musicScore.setText(String.valueOf(+scoreM));
@@ -42,6 +44,7 @@ public class HighscoreActivity extends AppCompatActivity {
 
         button_mainActivity = findViewById(R.id.button_mainActivity);
 
+        // returns user to the main menu
         button_mainActivity.setOnClickListener(view -> {
             Intent intent = new Intent(view.getContext(), MainActivity.class);
             startActivity(intent);

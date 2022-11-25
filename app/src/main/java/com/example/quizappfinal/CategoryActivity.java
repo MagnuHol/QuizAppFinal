@@ -13,6 +13,8 @@ public class CategoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category);
 
+        //makes the 3 different quiz categories into one "map" so it can be called on as just category in quiz activity.
+        // and sets value to each category.
         Button buttonHistory = findViewById(R.id.historybutton);
         buttonHistory.setOnClickListener(view -> {
             Intent intent = new Intent(view.getContext(), QuizActivity.class);
